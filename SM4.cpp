@@ -12,7 +12,7 @@ void fill_text(string& text) {
 //=========================================================================================================
 // Конвертація та зберігання тексту у символьному вигляді у файл
 string translate_hex_to_text(string& hex_text) {
-	string ascii_string;
+	string ascii_string = "";
 	for (size_t i = 0; i < hex_text.length(); i += 2) {
 		string byte_string = hex_text.substr(i, 2);
 		char byte = (char)strtol(byte_string.c_str(), NULL, 16);
@@ -25,8 +25,8 @@ string translate_hex_to_text(string& hex_text) {
 string translate_text_to_hex(string& text) {
 	stringstream ss;
 	for (size_t i = 0; i < text.length(); i++) {
-		char hex_char[3] = {};
-		snprintf(hex_char, 3, "%02x", text[i]);
+		char hex_char[3];
+		snprintf(hex_char, 3, "%02x", (BYTE)text[i]);
 		ss << hex_char;
 	}
 
@@ -120,20 +120,17 @@ void SM4_Block(DWORD X[], DWORD rk[], E_Encrypt_Mode is_encrypt) {
 //=========================================================================================================
 // Функція виконання алгоритму SM4 із заміром часу виконання
 void SM4Process(String^ path_initialtext, String^ path_finaltext, E_Encrypt_Mode encrypt_mode, DWORD MK[]) {
-	FileStream^ initialtext_fs = gcnew FileStream(path_initialtext, FileMode::Open, FileAccess::Read);
-	StreamReader^ initialtext_sr = gcnew StreamReader(initialtext_fs);
-	
-	string initialtext = Input_from_File(initialtext_sr);
-	fill_text(initialtext);
-	
+	ifstream in((LPCWSTR)Marshal::StringToHGlobalUni(path_initialtext).ToPointer(), ios::binary);
+	string initialtext = Input_from_File(in);
+	if (encrypt_mode == EEM_Encrypt)
+		fill_text(initialtext);
+	in.close();
+
 	string initialtext_hex = translate_text_to_hex(initialtext);
 	
 	// Обчислення кількості блоків, на які ділиться текст повідомлення
 	DWORD block_count = (DWORD)initialtext_hex.length() / (HEX_DWORD_BLOCK_SIZE * 4);
 	DWORD X[4] = {}, rk[32];
-
-	initialtext_sr->Close();
-	initialtext_fs->Close();
 
 	string finaltext_hex;
 
@@ -148,20 +145,19 @@ void SM4Process(String^ path_initialtext, String^ path_finaltext, E_Encrypt_Mode
 	}
 
 	// Вивід кінцевого тексту
-
 	// 1. У hex-вигляді
-	ofstream out("HEX_OUTPUT.txt");
-	out << finaltext_hex;
-	out.close();
+	ofstream hex_out("HEX_OUTPUT.txt");
+	hex_out << finaltext_hex;
+	hex_out.close();
 
 	// 2. У строковому вигляді
-	FileStream^ finaltext_fs = gcnew FileStream(path_finaltext, FileMode::Create, FileAccess::Write);
-	StreamWriter^ finaltext_sw = gcnew StreamWriter(finaltext_fs);
-
-	String^ finaltext = gcnew String(translate_hex_to_text(finaltext_hex).c_str());	
-	finaltext_sw->WriteLine(finaltext);
-	
-	finaltext_sw->Close();
-	finaltext_fs->Close();
+	ofstream out((LPCWSTR)Marshal::StringToHGlobalUni(path_finaltext).ToPointer(), ios::binary);
+	string finaltext = translate_hex_to_text(finaltext_hex);
+	if (encrypt_mode == EEM_Decrypt) {
+		size_t last_non_null = finaltext.find_last_not_of('\0');
+		finaltext.erase(last_non_null + 1);
+	}
+	out << finaltext;
+	out.close();
 }
 //=========================================================================================================

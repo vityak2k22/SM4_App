@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <vector>
 
 #define HEX_DWORD_BLOCK_SIZE 8
 #define BIN_DWORD_BLOCK_SIZE HEX_DWORD_BLOCK_SIZE * 4
@@ -21,7 +22,6 @@ using namespace System::IO;
 using namespace System::Runtime::InteropServices;
 
 //=========================================================================================================
-string Input_from_File(StreamReader^ sr);								// Внесення всього тексту у рядок (враховуючи переноси рядка)
 string Input_from_File(ifstream& in);									// Внесення всього тексту у рядок (враховуючи переноси рядка)
 void open_file_dialog_for_textbox(TextBox^ textbox);					// Відкриття файлу через вікно OpenFileDialog
 void convert_string_to_dword_for_MK(TextBox^ MK_textbox, DWORD MK[]);	// Перетворення введенного ключа в 16-байтовий масив
