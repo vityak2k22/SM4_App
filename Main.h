@@ -43,6 +43,15 @@ namespace SM4App {
 
 	protected:
 		LPCWSTR setting_ini_path = L".//settings.ini";
+	private: System::Windows::Forms::CheckBox^ demoCheckBox;
+	private: System::Windows::Forms::CheckBox^ settingsiniCheckBox;
+
+	private: System::Windows::Forms::Label^ keyexplainLabel;
+
+
+
+
+	protected:
 
 	private:
 		/// <summary>
@@ -75,6 +84,9 @@ namespace SM4App {
 			this->finaltextOpenFileButton = (gcnew System::Windows::Forms::Button());
 			this->statusStrip = (gcnew System::Windows::Forms::StatusStrip());
 			this->statusLabel = (gcnew System::Windows::Forms::ToolStripStatusLabel());
+			this->demoCheckBox = (gcnew System::Windows::Forms::CheckBox());
+			this->settingsiniCheckBox = (gcnew System::Windows::Forms::CheckBox());
+			this->keyexplainLabel = (gcnew System::Windows::Forms::Label());
 			lookmkButton = (gcnew System::Windows::Forms::Button());
 			this->statusStrip->SuspendLayout();
 			this->SuspendLayout();
@@ -82,6 +94,7 @@ namespace SM4App {
 			// lookmkButton
 			// 
 			lookmkButton->Location = System::Drawing::Point(450, 232);
+			lookmkButton->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			lookmkButton->Name = L"lookmkButton";
 			lookmkButton->Size = System::Drawing::Size(63, 27);
 			lookmkButton->TabIndex = 19;
@@ -95,10 +108,10 @@ namespace SM4App {
 			this->startButton->Enabled = false;
 			this->startButton->Font = (gcnew System::Drawing::Font(L"Arial Narrow", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->startButton->Location = System::Drawing::Point(16, 303);
+			this->startButton->Location = System::Drawing::Point(15, 288);
 			this->startButton->Margin = System::Windows::Forms::Padding(4);
 			this->startButton->Name = L"startButton";
-			this->startButton->Size = System::Drawing::Size(501, 49);
+			this->startButton->Size = System::Drawing::Size(694, 49);
 			this->startButton->TabIndex = 0;
 			this->startButton->Text = L"Start SM4";
 			this->startButton->UseVisualStyleBackColor = true;
@@ -109,12 +122,12 @@ namespace SM4App {
 			this->Intro->AutoSize = true;
 			this->Intro->Font = (gcnew System::Drawing::Font(L"Arial Narrow", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->Intro->Location = System::Drawing::Point(200, 11);
+			this->Intro->Location = System::Drawing::Point(243, 9);
 			this->Intro->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->Intro->Name = L"Intro";
-			this->Intro->Size = System::Drawing::Size(113, 29);
+			this->Intro->Size = System::Drawing::Size(247, 29);
 			this->Intro->TabIndex = 2;
-			this->Intro->Text = L"SM4 Demo";
+			this->Intro->Text = L"SM4 Demo (for only *.txt)";
 			this->Intro->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
 			// initialtextTextBox
@@ -122,7 +135,7 @@ namespace SM4App {
 			this->initialtextTextBox->Location = System::Drawing::Point(124, 70);
 			this->initialtextTextBox->Margin = System::Windows::Forms::Padding(4);
 			this->initialtextTextBox->Name = L"initialtextTextBox";
-			this->initialtextTextBox->Size = System::Drawing::Size(319, 22);
+			this->initialtextTextBox->Size = System::Drawing::Size(515, 22);
 			this->initialtextTextBox->TabIndex = 3;
 			this->initialtextTextBox->TextChanged += gcnew System::EventHandler(this, &Main::initialtextTextBox_TextChanged);
 			// 
@@ -132,9 +145,9 @@ namespace SM4App {
 			this->initextLabel->Location = System::Drawing::Point(12, 74);
 			this->initextLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->initextLabel->Name = L"initextLabel";
-			this->initextLabel->Size = System::Drawing::Size(91, 16);
+			this->initextLabel->Size = System::Drawing::Size(94, 16);
 			this->initextLabel->TabIndex = 4;
-			this->initextLabel->Text = L"Initialext (path)";
+			this->initextLabel->Text = L"Initialtext (path)";
 			// 
 			// cryptionRadioButton
 			// 
@@ -143,10 +156,10 @@ namespace SM4App {
 			this->cryptionRadioButton->Location = System::Drawing::Point(124, 182);
 			this->cryptionRadioButton->Margin = System::Windows::Forms::Padding(4);
 			this->cryptionRadioButton->Name = L"cryptionRadioButton";
-			this->cryptionRadioButton->Size = System::Drawing::Size(77, 20);
+			this->cryptionRadioButton->Size = System::Drawing::Size(114, 25);
 			this->cryptionRadioButton->TabIndex = 6;
 			this->cryptionRadioButton->TabStop = true;
-			this->cryptionRadioButton->Text = L"Cryption";
+			this->cryptionRadioButton->Text = L"Encryption";
 			this->cryptionRadioButton->UseVisualStyleBackColor = true;
 			// 
 			// finaltextLabel
@@ -164,7 +177,7 @@ namespace SM4App {
 			this->finaltextTextBox->Location = System::Drawing::Point(124, 127);
 			this->finaltextTextBox->Margin = System::Windows::Forms::Padding(4);
 			this->finaltextTextBox->Name = L"finaltextTextBox";
-			this->finaltextTextBox->Size = System::Drawing::Size(319, 22);
+			this->finaltextTextBox->Size = System::Drawing::Size(515, 22);
 			this->finaltextTextBox->TabIndex = 8;
 			this->finaltextTextBox->TextChanged += gcnew System::EventHandler(this, &Main::finaltextTextBox_TextChanged);
 			// 
@@ -192,12 +205,12 @@ namespace SM4App {
 			// mkLabel
 			// 
 			this->mkLabel->AutoSize = true;
-			this->mkLabel->Location = System::Drawing::Point(12, 238);
+			this->mkLabel->Location = System::Drawing::Point(11, 239);
 			this->mkLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->mkLabel->Name = L"mkLabel";
-			this->mkLabel->Size = System::Drawing::Size(59, 16);
+			this->mkLabel->Size = System::Drawing::Size(35, 16);
 			this->mkLabel->TabIndex = 11;
-			this->mkLabel->Text = L"MK (key)";
+			this->mkLabel->Text = L"Key*";
 			// 
 			// mkTextBox
 			// 
@@ -212,7 +225,7 @@ namespace SM4App {
 			// 
 			// initialtextOpenFileButton
 			// 
-			this->initialtextOpenFileButton->Location = System::Drawing::Point(451, 70);
+			this->initialtextOpenFileButton->Location = System::Drawing::Point(646, 68);
 			this->initialtextOpenFileButton->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->initialtextOpenFileButton->Name = L"initialtextOpenFileButton";
 			this->initialtextOpenFileButton->Size = System::Drawing::Size(63, 27);
@@ -223,7 +236,7 @@ namespace SM4App {
 			// 
 			// finaltextOpenFileButton
 			// 
-			this->finaltextOpenFileButton->Location = System::Drawing::Point(451, 126);
+			this->finaltextOpenFileButton->Location = System::Drawing::Point(646, 125);
 			this->finaltextOpenFileButton->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->finaltextOpenFileButton->Name = L"finaltextOpenFileButton";
 			this->finaltextOpenFileButton->Size = System::Drawing::Size(63, 27);
@@ -236,10 +249,10 @@ namespace SM4App {
 			// 
 			this->statusStrip->ImageScalingSize = System::Drawing::Size(20, 20);
 			this->statusStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->statusLabel });
-			this->statusStrip->Location = System::Drawing::Point(0, 368);
+			this->statusStrip->Location = System::Drawing::Point(0, 348);
 			this->statusStrip->Name = L"statusStrip";
 			this->statusStrip->Padding = System::Windows::Forms::Padding(1, 0, 13, 0);
-			this->statusStrip->Size = System::Drawing::Size(533, 26);
+			this->statusStrip->Size = System::Drawing::Size(721, 26);
 			this->statusStrip->SizingGrip = false;
 			this->statusStrip->TabIndex = 18;
 			this->statusStrip->Text = L"statusStrip1";
@@ -250,11 +263,44 @@ namespace SM4App {
 			this->statusLabel->Size = System::Drawing::Size(243, 20);
 			this->statusLabel->Text = L"Enter the required data in the fields";
 			// 
+			// demoCheckBox
+			// 
+			this->demoCheckBox->AutoSize = true;
+			this->demoCheckBox->Location = System::Drawing::Point(524, 234);
+			this->demoCheckBox->Margin = System::Windows::Forms::Padding(4);
+			this->demoCheckBox->Name = L"demoCheckBox";
+			this->demoCheckBox->Size = System::Drawing::Size(179, 20);
+			this->demoCheckBox->TabIndex = 20;
+			this->demoCheckBox->Text = L"with Demonstration Mode";
+			this->demoCheckBox->UseVisualStyleBackColor = true;
+			// 
+			// settingsiniCheckBox
+			// 
+			this->settingsiniCheckBox->AutoSize = true;
+			this->settingsiniCheckBox->Location = System::Drawing::Point(524, 261);
+			this->settingsiniCheckBox->Name = L"settingsiniCheckBox";
+			this->settingsiniCheckBox->Size = System::Drawing::Size(168, 20);
+			this->settingsiniCheckBox->TabIndex = 21;
+			this->settingsiniCheckBox->Text = L"generate settings.ini file";
+			this->settingsiniCheckBox->UseVisualStyleBackColor = true;
+			// 
+			// keyexplainLabel
+			// 
+			this->keyexplainLabel->AutoSize = true;
+			this->keyexplainLabel->Location = System::Drawing::Point(121, 264);
+			this->keyexplainLabel->Name = L"keyexplainLabel";
+			this->keyexplainLabel->Size = System::Drawing::Size(124, 16);
+			this->keyexplainLabel->TabIndex = 22;
+			this->keyexplainLabel->Text = L"*up to 16 characters";
+			// 
 			// Main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(533, 394);
+			this->ClientSize = System::Drawing::Size(721, 374);
+			this->Controls->Add(this->keyexplainLabel);
+			this->Controls->Add(this->settingsiniCheckBox);
+			this->Controls->Add(this->demoCheckBox);
 			this->Controls->Add(lookmkButton);
 			this->Controls->Add(this->statusStrip);
 			this->Controls->Add(this->finaltextOpenFileButton);
@@ -320,9 +366,6 @@ namespace SM4App {
 
 	private: System::Void initialtextOpenFileButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		open_file_dialog_for_textbox(initialtextTextBox);
-
-		int last_slash_index = initialtextTextBox->Text->LastIndexOf('\\');
-		finaltextTextBox->Text = initialtextTextBox->Text->Substring(0, last_slash_index + 1) + "FINALTEXT.txt";
 	}
 	private: System::Void finaltextOpenFileButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		open_file_dialog_for_textbox(finaltextTextBox);
@@ -338,14 +381,16 @@ namespace SM4App {
 		File^ file_path;
 		if (file_path->Exists(path_initialtext)) {
 			E_Encrypt_Mode encrypt_mode = (E_Encrypt_Mode)cryptionRadioButton->Checked;
+			E_Demo_Mode demo_mode = (E_Demo_Mode)demoCheckBox->Checked;
 			DWORD MK[4] = {};
 			convert_string_to_dword_for_MK(mkTextBox, MK);
 			
 			statusLabel->Text = "SM4 process is working. . .";
-			SM4Process(path_initialtext, path_finaltext, encrypt_mode, MK);
+			SM4Process(path_initialtext, path_finaltext, encrypt_mode, MK, demo_mode);
 			statusLabel->Text = "Done! Result saved in " + finaltextTextBox->Text;
 
-			save_new_settingsfile();
+			if (settingsiniCheckBox->Checked)
+				save_new_settingsfile();
 		}
 		else
 			statusLabel->Text = "Invalid paths to initialtext file";
@@ -371,7 +416,7 @@ private: System::Void lookmkButton_Click(System::Object^ sender, System::EventAr
 	mkTextBox->PasswordChar = mkTextBox->PasswordChar ? '\0' : PASS_CHAR;
 }
 private: System::Void mkTextBox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
-	e->Handled = mkTextBox->Text->Length > MK_MAXLENGTH;
+	e->Handled = mkTextBox->Text->Length >= MK_MAXLENGTH;
 	if (e->KeyChar == (char)Keys::Back)
 		e->Handled = false;
 }

@@ -3,13 +3,14 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <vector>
+#include <stdarg.h>
 
 #define HEX_DWORD_BLOCK_SIZE 8
 #define BIN_DWORD_BLOCK_SIZE HEX_DWORD_BLOCK_SIZE * 4
 #define MK_MAXLENGTH 16
 #define BACKSPACE 8
 #define PASS_CHAR '*'
+#define DEMO_FILE_PATH "Demonstration.txt"
 
 using namespace std;
 
@@ -25,6 +26,12 @@ using namespace System::Runtime::InteropServices;
 string Input_from_File(ifstream& in);									// Внесення всього тексту у рядок (враховуючи переноси рядка)
 void open_file_dialog_for_textbox(TextBox^ textbox);					// Відкриття файлу через вікно OpenFileDialog
 void convert_string_to_dword_for_MK(TextBox^ MK_textbox, DWORD MK[]);	// Перетворення введенного ключа в 16-байтовий масив
+void fill_text(string& text);
+string translate_hex_to_text(string& hex_text);
+string translate_text_to_hex(string& text);
+void take_hex_value_for_dword(DWORD X[], string& hex_text, size_t index);
+void save_finaltext_dword(DWORD X[], string& finaltext_hex);
+void make_demonstration_note(const char* format, ...);
 //=========================================================================================================
 namespace SM4_Consts {
 	const BYTE SBox[256] = {
