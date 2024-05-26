@@ -20,7 +20,7 @@ void open_file_dialog_for_textbox(TextBox^ textbox) {
 //=========================================================================================================
 // Перетворення введенного ключа в 16-байтовий масив
 void convert_string_to_dword_for_MK(TextBox^ MK_textbox, DWORD MK[]) {
-	for (BYTE i = 0, k = i / 4; i < MK_textbox->Text->Length; i++) {
+	for (BYTE i = 0, k = 0; i < MK_textbox->Text->Length; i++, k = i / 4) {
 		MK[k] = (MK[k] << 8) | MK_textbox->Text[i];
 		if (i == MK_textbox->Text->Length - 1)
 			MK[k] <<= BIN_DWORD_BLOCK_SIZE - MK_textbox->Text->Length % 4 * 8;
@@ -53,10 +53,6 @@ string translate_text_to_hex(string& text) {
 		snprintf(hex_char, 3, "%02x", (BYTE)text[i]);
 		ss << hex_char;
 	}
-
-	ofstream out("HEX_INPUT.txt");
-	out << ss.str();
-	out.close();
 
 	return ss.str();
 }

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <stdarg.h>
+#include <ctime>
 
 #define HEX_DWORD_BLOCK_SIZE 8
 #define BIN_DWORD_BLOCK_SIZE HEX_DWORD_BLOCK_SIZE * 4
