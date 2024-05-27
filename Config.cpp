@@ -87,12 +87,12 @@ void save_finaltext_dword(DWORD X[], string& finaltext_hex) {
 	finaltext_hex += X_hex_string;
 }
 //=========================================================================================================
-void make_demonstration_note(const char* format, ...) {
+void make_demonstration_note(const wchar_t* format, ...) {
 	FILE* demo_file = fopen(DEMO_FILE_PATH, "a");
 
 	va_list args;
 	va_start(args, format);
-	vfprintf(demo_file, format, args);
+	vfwprintf(demo_file, format, args);
 	va_end(args);
 
 	fclose(demo_file);

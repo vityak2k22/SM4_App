@@ -32,7 +32,7 @@ string translate_hex_to_text(string& hex_text);
 string translate_text_to_hex(string& text);
 void take_hex_value_for_dword(DWORD X[], string& hex_text, size_t index);
 void save_finaltext_dword(DWORD X[], string& finaltext_hex);
-void make_demonstration_note(const char* format, ...);
+void make_demonstration_note(const wchar_t* format, ...);
 //=========================================================================================================
 namespace SM4_Consts {
 	const BYTE SBox[256] = {
